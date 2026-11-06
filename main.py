@@ -15,6 +15,12 @@ st.set_page_config(
 )
 
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+if not GOOGLE_API_KEY:
+    try:
+        GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
+    except (KeyError, FileNotFoundError):
+        st.error("Gemini API key not configured.")
+        st.stop()
 MODEL_NAME = "gemini-2.5-flash"
 
 if not GOOGLE_API_KEY:
